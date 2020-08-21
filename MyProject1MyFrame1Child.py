@@ -214,11 +214,12 @@ class MyProject1MyFrame1Child(MyProject1MyFrame1):
 		self.output_dir, _ = (self.output_tif).rsplit(os.sep, 1)
 		self.m_textCtrl1.SetValue(self.path)
 		self.m_textCtrl2.SetValue(self.cmap)
+		source_img = cv2.imread(self.m_textCtrl1.GetValue())
 
 		# color map画像読み込み
 		self.org_img = cv2.imread(self.cmap, 0)
 		self.base_img = self.org_img[0:512, 0:512]
-		self.show_image(self.org_img[570:590, 480:520], self.m_panel4, 1)
+		self.show_image(source_img[570:590, 480:520], self.m_panel4, 1)
 		self.counting()
 
 	def m_slider2OnScroll(self, event):
