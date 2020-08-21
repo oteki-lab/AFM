@@ -252,7 +252,14 @@ class MyProject1MyFrame1Child(MyProject1MyFrame1):
 
 	def m_spinCtrlDouble1OnSpinCtrlText(self, event):
 		self.params['height'] = self.m_spinCtrlDouble1.GetValue()
+		dots_disp = []
+		for dot in self.dots:
+			dots_disp.append(dot['marker'])
 		self.counting()
+		for index, flag in enumerate(dots_disp):
+			self.dots[index]['marker'] = flag
+			self.m_grid1.SetCellValue(index, 2, flag)
+		self.rendering()
 
 	def m_checkBox1OnCheckBox(self, event):
 		self.states['marker'] = self.m_checkBox1.GetValue()
