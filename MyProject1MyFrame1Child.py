@@ -139,7 +139,10 @@ class MyProject1MyFrame1Child(MyProject1MyFrame1):
 					if area > self.params['area']:
 						# 図形を数える
 						org = (approx.ravel()[0], approx.ravel()[1])
-						self.dots.append({'no': len(self.dots)+1, 'cnt': cnt, 'area': area, 'diameter': 2*np.sqrt(area/np.pi), 'approx': approx, 'marker': '1', 'created': False})
+						M = cv2.moments(cnt)
+						cX = int(M["m10"] / M["m00"])/512*1000
+						cY = int(M["m01"] / M["m00"])/512*1000
+						self.dots.append({'no': len(self.dots)+1, 'cnt': cnt, 'area': area, 'diameter': 2*np.sqrt(area/np.pi), 'cX': cX, 'cY': cY, 'approx': approx, 'marker': '1', 'created': False})
 						cv2.drawContours(img, [approx], 0, color, 1)
 						cv2.putText(img, "{}".format(len(self.dots)), org, font, 0.4, color)
 
@@ -274,11 +277,11 @@ class MyProject1MyFrame1Child(MyProject1MyFrame1):
 			os.mkdir(self.output_dir)
 
 		dots_disp = []
-		output_dots = [["No", "area [nm2]", "height [nm]", "diameter [nm]"]]
+		output_dots = [["No", "area [nm2]", "height [nm]", "diameter [nm]", "coord_x [nm]", "coord_y [nm]"]]
 		for dot in self.dots:
 			dots_disp.append(dot['marker'])
 			if dot['marker'] == '1':
-				output_dots.append([dot['no'], dot['area'], dot['height'], dot['diameter']])
+				output_dots.append([dot['no'], dot['area'], dot['height'], dot['diameter'], dot['cX'], dot['cY']])
 		with open(self.output_csv, 'w', newline='') as book:
 			csv.writer(book).writerows(output_dots)
 		with open(self.output_json, 'w') as paramsfile:
