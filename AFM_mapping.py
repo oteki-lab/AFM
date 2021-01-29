@@ -8,7 +8,7 @@ sns.set(font_scale=5)
 sns.set_style("ticks", {'axes.grid': True, 'xtick.top': True,  'ytick.right': True, "xtick.direction": "in", "ytick.direction": "in"})
 
 csv_input = pd.read_csv(filepath_or_buffer=filename+'.csv', encoding="ms932", sep=",")
-x = npdata=np.array(csv_input[["d [nm]"]].values.flatten())
+x = npdata=np.array(csv_input[["diameter [nm]"]].values.flatten())
 y = npdata=np.array(csv_input[["height [nm]"]].values.flatten())
 data = np.stack([x, y], 1)#np.random.randn(100, 2)  #
 df = pd.DataFrame(data, columns=['X', 'Y'])
